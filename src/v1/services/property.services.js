@@ -1,0 +1,52 @@
+import { propertyRepository } from "../repositories/property.repository.js";
+import { categoryRepository } from "../repositories/category.repository.js";
+import { PLAN } from "../constants/user.constants.js";
+
+export const getAllProperties = async () => {
+
+    let propiedades = await propertyRepository.getAllPaginated();
+    return propiedades;
+}
+export const getAllUserProperties = async (userid) => {
+    let propiedades = await propertyRepository.getAllbyUser(userid);
+    return propiedades;
+}
+
+export const createProperty = async (data) => {
+    const userProperties = await propertyRepository.getAllbyUser(data.userId);
+    if (data.plan!=PLAN.PREMUIM && userProperties.length > 3){
+        const error = new Error("Has alcanzado el maximo de propiedades. Por favor actualiza el plan");
+        error.status = 400;
+        throw error;
+    }
+    const categoriaExiste = await categoryRepository.findById(data.categoryId);
+    if (!categoriaExiste) {
+        const error = new Error("La categoria no existe");
+        error.status = 400;
+        throw error;
+    }
+    const property = await propertyRepository.create(data);
+    return property;
+}
+
+export const updateProperty = async (id, data) => {
+    const esOwner = await propertyRepository.findByFilter({ userId: data.userId, _id:id });
+    if (!esOwner) {
+        const error = new Error("No puede modificar esa propiedad");
+        error.status = 400;
+        throw error;
+    }
+    const property = await propertyRepository.patchById(id, data);
+    return property;
+};
+
+export const deleteProperty = async (id,userid) => {
+    const esOwner = await propertyRepository.findByFilter({ userId: data.userId, _id:id });
+    if (!esOwner) {
+        const error = new Error("No puede borrar esa propiedad");
+        error.status = 400;
+        throw error;
+    }
+    const property = await propertyRepository.deleteById(id);
+    return property;
+};
