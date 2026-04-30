@@ -28,7 +28,9 @@ export const updateCategoryController = async (req, res, next) => {
         const  data= req.body;
         const category = await categoryServices.updateCategory(id, data);
         if (!category) {
-            return next(createError('Categoria no encontrada', 404));
+            const error = new Error("Categoria no encontrada");
+            error.status = 404;
+            throw error;
         }
         res.json({
             message: 'Categoria actualizada',
@@ -44,7 +46,9 @@ export const deleteCategoryController = async (req, res, next) => {
         const { id } = req.params;
         const category = await categoryServices.deleteCategory(id);
         if (!category) {
-            return next(createError('Categoria no encontrada', 404));
+            const error = new Error("Categoria no encontrada");
+            error.status = 404;
+            throw error;
         }
         res.json({
             message: 'Categoria borrada exitosamente'

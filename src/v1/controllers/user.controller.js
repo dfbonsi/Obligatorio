@@ -16,7 +16,9 @@ export const updateUserPlanController = async (req, res, next) => {
         const user  = req.user;
         const token = await userService.updateUserPlan(user);
         if (!token) {
-            return next(createError('Plan no actualizado', 404));
+            const error = new Error("Plan no actualizado");
+            error.status = 404;
+            throw error;
         }
         res.json({
             message: 'Plan actualizado',

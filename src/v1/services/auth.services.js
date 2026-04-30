@@ -7,7 +7,9 @@ export const registerUser = async (user) => {
     //buscamos el usuario por email y si ya existe podriamos lanzar un error
     const usuarioExiste = await userRepository.findByEmail(email);
     if (usuarioExiste) {
-        throw new Error("Existe otro usuario con el mismo email");
+        const error = new Error("Existe otro usuario con el mismo email");
+        error.status = 400;
+        throw error;
     };
     const { password } = user;
     //encriptamos el password con bcrypt

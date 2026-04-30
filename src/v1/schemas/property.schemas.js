@@ -13,7 +13,8 @@ export const createPropertySchema = Joi.object({
   }).required(),
   rooms: Joi.number().integer().min(1).required(),
   bathrooms: Joi.number().integer().min(1).required(),
-  categoryId: Joi.string().hex().length(24).required()
+  categoryId: Joi.string().hex().length(24).required(),
+  imageUrl: Joi.string().uri(),
 });
 
 export const replacePropertySchema = Joi.object({
@@ -27,10 +28,13 @@ export const replacePropertySchema = Joi.object({
   }),
   rooms: Joi.number().integer().min(1),
   bathrooms: Joi.number().integer().min(1),
-  categoryId: Joi.string().hex().length(24)
+  categoryId: Joi.string().hex().length(24),
+  imageUrl: Joi.string().uri().allow(null, "")
 })
 .min(1);
 
 export const propertyIdParamSchema = Joi.object({
     id: mongoIdSchema
 });
+
+//export const filtersParamSchema = 

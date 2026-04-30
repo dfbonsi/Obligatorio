@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const categorySchema = new mongoose.Schema({
-    categoryName: { type: String, unique: true, required: true, trim: true },
+    categoryName: { type: String, unique: true, required: true, trim: true , uppercase: true},
 }, { timestamps: true })
 
 //se agrega el tojson para transformar la salida al hacer res.status.json

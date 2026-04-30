@@ -12,7 +12,9 @@ export const createUser = async (data) => {
     const { email } = data;
     const usuarioExiste = await userRepository.findByEmail(email);
     if (usuarioExiste) {
-        throw new Error("Existe otro usuario con el mismo email");
+        const error = new Error("Existe otro usuario con el mismo email");
+        error.status = 400;
+        throw error;
     }
     return await userRepository.create(data);
 }
@@ -21,7 +23,9 @@ export const updateUserPlan = async (data) => {
 
     const { userId, plan } = data;
     if (plan === enums.PLAN.PREMUIM){
-        throw new Error("El usuario ya tiene el plan mas alto");
+        const error = new Error("El usuario ya tiene el plan mas alto");
+        error.status = 400;
+        throw error;
     }
     data.plan= enums.PLAN.PREMUIM;
     const user = await userRepository.patchById(userId,data);

@@ -23,9 +23,9 @@ export const propertyRepository = {
         const propiedades = await Property.findOne(filter);
         return propiedades;
     },
-    findByFilterPaginated: async (page, limit, filter) => {
+    findByFilterPaginated: async (page, limit, filter, sortOption) => {
         const skip = (page - 1) * limit;
-        const propiedades = await Property.find(filter).skip(skip).limit(limit);
+        const propiedades = await Property.find(filter).skip(skip).limit(limit).sort(sortOption).populate("userId", "email -_id").populate("categoryId", "categoryName -_id");
         return propiedades;
     },
     patchById: async (id, data) => {

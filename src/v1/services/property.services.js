@@ -2,13 +2,20 @@ import { propertyRepository } from "../repositories/property.repository.js";
 import { categoryRepository } from "../repositories/category.repository.js";
 import { PLAN } from "../constants/user.constants.js";
 
-export const getAllProperties = async () => {
+export const getAllProperties = async (page, limit) => {
 
-    let propiedades = await propertyRepository.getAllPaginated();
+    let propiedades = await propertyRepository.getAllPaginated(page, limit);
     return propiedades;
 }
+
 export const getAllUserProperties = async (userid) => {
     let propiedades = await propertyRepository.getAllbyUser(userid);
+    return propiedades;
+}
+
+export const getAllPropertiesWithFilters = async (page, limit,filter, sortOption) => {
+
+    let propiedades = await propertyRepository.findByFilterPaginated(page, limit,filter, sortOption);
     return propiedades;
 }
 
@@ -33,7 +40,7 @@ export const updateProperty = async (id, data) => {
     const esOwner = await propertyRepository.findByFilter({ userId: data.userId, _id:id });
     if (!esOwner) {
         const error = new Error("No puede modificar esa propiedad");
-        error.status = 400;
+        error.status = 401;
         throw error;
     }
     const property = await propertyRepository.patchById(id, data);
@@ -41,10 +48,10 @@ export const updateProperty = async (id, data) => {
 };
 
 export const deleteProperty = async (id,userid) => {
-    const esOwner = await propertyRepository.findByFilter({ userId: data.userId, _id:id });
+    const esOwner = await propertyRepository.findByFilter({ userId: userid, _id:id });
     if (!esOwner) {
         const error = new Error("No puede borrar esa propiedad");
-        error.status = 400;
+        error.status = 401;
         throw error;
     }
     const property = await propertyRepository.deleteById(id);
