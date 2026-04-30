@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "3024473b-cdb5-4056-9434-97abad4e4bbb",
+    "_postman_id": "0911924e-6934-4c26-9511-364199b4ea7e",
     "name": "Obligatorio",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "5490486"
@@ -3383,7 +3383,7 @@
   "variable": [
     {
       "key": "URL_DEV",
-      "value": ""
+      "value": "http://localhost:3000"
     },
     {
       "key": "token",
@@ -3399,11 +3399,11 @@
     },
     {
       "key": "prod_base_url",
-      "value": ""
+      "value": "https://obligatorio-iota.vercel.app"
     },
     {
       "key": "URL_BASE",
-      "value": ""
+      "value": "{{prod_base_url}}"
     },
     {
       "key": "categoryName",
