@@ -5,10 +5,10 @@ import { handleUpload } from "@vercel/blob/client";
 export const getTokenImage = async (req, res) => {
     try {
         console.log('Entro en token')
-        const body = req.body;
+        const pathname = req.body.pathname;
 
         const jsonResponse = await handleUpload({
-            body,
+            pathname,
             request: req,
 
             async onBeforeGenerateToken(pathname) {
