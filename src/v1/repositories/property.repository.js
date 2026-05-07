@@ -41,5 +41,9 @@ export const propertyRepository = {
     deleteById: async (propertyid) => {
         const propiedades = await Property.findOneAndDelete({ _id: propertyid });
         return propiedades;
+    },
+    removeCategory: async (categoryid) => {
+        const propiedades = await Property.updateMany({categoryId:categoryid}, { $unset: { categoryId: ""} });
+        return propiedades;
     }
 }

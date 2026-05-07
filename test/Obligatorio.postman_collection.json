@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "0911924e-6934-4c26-9511-364199b4ea7e",
+    "_postman_id": "b8fe28db-1dc7-46af-a429-4741e7a97b86",
     "name": "Obligatorio",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "5490486"
@@ -822,7 +822,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pathname\": \"test-image.png\"\n}",
+              "raw": "{\n  \"type\": \"blob.generate-client-token\",\n  \"payload\": {\n    \"pathname\": \"test-image.png\"\n  }\n}\n",
               "options": {
                 "raw": {
                   "language": "json"

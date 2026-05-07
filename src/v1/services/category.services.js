@@ -22,7 +22,7 @@ export const updateCategory = async (id, data) => {
     const category = await categoryRepository.patchById(id, data);
     return category;
 };
-//TODO: queda ver que hacer con la referencia a la categoria dentro de las propiedades
+
 export const deleteCategory = async (id) => {
     const category = await categoryRepository.deleteById(id);
     return category;

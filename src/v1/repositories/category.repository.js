@@ -1,4 +1,5 @@
 import { Category } from "../models/category.mongo.model.js";
+import { propertyRepository } from "../repositories/property.repository.js";
 
 export const categoryRepository = {
     getAll: async () => {
@@ -28,6 +29,7 @@ export const categoryRepository = {
         );
     },
     deleteById: async (id) => {
+        const propiedades = await propertyRepository.removeCategory(id);
         const categorias = await Category.findOneAndDelete({ _id: id });
         return categorias;
     }
