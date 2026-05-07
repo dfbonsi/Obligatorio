@@ -1,8 +1,7 @@
-import OpenAI from "openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import 'dotenv/config';
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+const genAI = new GoogleGenerativeAI(process.env.IA_API_KEY);
 
 export async function generarDescripcionIA(data) {
   try {
@@ -17,15 +16,23 @@ export async function generarDescripcionIA(data) {
     Precio por noche: ${data.price_by_night}
     `;
 
-    const response = await client.responses.create({
-      model: "gpt-4.1-mini",
-      input: prompt
+    const iaModel = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash-lite",
+      systemInstruction: {
+        role: "system",
+        parts: [{ text: "Eres un editor de estilo experto. Tu única función es generar una unica descripcion. Devuelve solo el texto corregido, sin introducciones ni despedidas." }]
+      }
     });
 
-    return response.output[0].content[0].text;
+    const result = await iaModel.generateContent(prompt);
+    return result.response.text().trim();
 
   } catch (error) {
     //console.error("Error IA:", error.message);
      throw error;
   }
 }
+
+
+
+
