@@ -9,15 +9,16 @@ import cors from "cors";
 connectMongo();
 const app = express();
 const corsOptions = {
-origin: [
-        "https://obligatorio-frontend.vercel.app"
-],
-methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    origin: [
+            "https://obligatorio-frontend.vercel.app"
+    ],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true, // solo si usás cookies/sesión
 };
 
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); 
 
 app.use(express.json());
 
