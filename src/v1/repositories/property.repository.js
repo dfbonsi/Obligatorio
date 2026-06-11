@@ -3,16 +3,16 @@ import { Property } from "../models/property.mongo.model.js";
 
 export const propertyRepository = {
     getAll: async () => {
-        const propiedades = await Property.find().populate("userId", "email -_id").populate("categoryId", "categoryName -_id");
+        const propiedades = await Property.find().populate("userId", "email -_id").populate("categoryId", "categoryName");
         return propiedades;
     },
     getAllbyUser: async (userid) => {
-        const propiedades = await Property.find({ userId: userid }).populate("userId", "email -_id").populate("categoryId", "categoryName -_id");
+        const propiedades = await Property.find({ userId: userid }).populate("userId", "email -_id").populate("categoryId", "categoryName");
         return propiedades;
     },
     getAllPaginated: async (page, limit) => {
         const skip = (page - 1) * limit;
-        const propiedades = await Property.find().skip(skip).limit(limit).populate("userId", "email -_id").populate("categoryId", "categoryName -_id");
+        const propiedades = await Property.find().skip(skip).limit(limit).populate("userId", "email -_id").populate("categoryId", "categoryName");
         return propiedades;
     },
     create: async (data) => {
@@ -25,7 +25,7 @@ export const propertyRepository = {
     },
     findByFilterPaginated: async (page, limit, filter, sortOption) => {
         const skip = (page - 1) * limit;
-        const propiedades = await Property.find(filter).skip(skip).limit(limit).sort(sortOption).populate("userId", "email -_id").populate("categoryId", "categoryName -_id");
+        const propiedades = await Property.find(filter).skip(skip).limit(limit).sort(sortOption).populate("userId", "email -_id").populate("categoryId", "categoryName");
         return propiedades;
     },
     patchById: async (id, data) => {

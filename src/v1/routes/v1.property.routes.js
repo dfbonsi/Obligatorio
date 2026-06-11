@@ -7,7 +7,7 @@ import { ROLE } from "../constants/user.constants.js";
 import { validateParamsProperty, validateCreateProperty, validatePatchProperty } from "../middleware/property.validate.middleware.js";
 const v1PropertyRoutes = Router();
 
-v1PropertyRoutes.post("/img-token", getTokenImage);
+//v1PropertyRoutes.post("/img-token", getTokenImage);
 v1PropertyRoutes.use(authMiddleware);
 v1PropertyRoutes.get("/",  pController.getAllPropertiesController);
 v1PropertyRoutes.get("/mispropiedades",  validateRol(ROLE.PROPIETARIO), pController.getAllPropertiesByUserController);

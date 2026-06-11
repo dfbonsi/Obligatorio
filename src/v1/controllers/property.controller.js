@@ -15,8 +15,8 @@ export const getAllPropertiesController = async (req, res, next) => {
             sort = "createdAt",
             order = "desc"
         } = req.query;
-        const paginas = page || 1;
-        const limite = limit || 10;
+       // const paginas = page || 1;
+       // const limite = limit || 10;
         const filtro = {};
         if (categoryId) filtro.categoryId = categoryId;
         if (city) filtro["location.city"] = city;
@@ -32,7 +32,7 @@ export const getAllPropertiesController = async (req, res, next) => {
         const sortOption = {
             [sort]: order === "asc" ? 1 : -1
         };
-        const propiedades = await propertyService.getAllPropertiesWithFilters(paginas,limite,filtro,sortOption);
+        const propiedades = await propertyService.getAllPropertiesWithFilters(page,limit,filtro,sortOption);
         //console.log('propiedades', propiedades)
         res.status(200).json({ propiedades })
     } catch (error) {
@@ -116,13 +116,10 @@ export const generarDescripcion = async (req, res) => {
     const descripcion = await generarDescripcionIA(data);
     if (!descripcion) {
         return res.status(400).json({
-        success: false,
         mensaje: "No se pudo generar la descripción automáticamente. Puedes ingresarla manualmente."
       });
     }
-
     res.json({
-      success: true,
       descripcion
     });
 

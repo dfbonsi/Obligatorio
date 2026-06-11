@@ -15,6 +15,7 @@ export const createPropertySchema = Joi.object({
   bathrooms: Joi.number().integer().min(1).required(),
   categoryId: Joi.string().hex().length(24).required(),
   imageUrl: Joi.string().uri(),
+  imagePublicId: Joi.string()
 });
 
 export const replacePropertySchema = Joi.object({
@@ -29,7 +30,8 @@ export const replacePropertySchema = Joi.object({
   rooms: Joi.number().integer().min(1),
   bathrooms: Joi.number().integer().min(1),
   categoryId: Joi.string().hex().length(24),
-  imageUrl: Joi.string().uri().allow(null, "")
+  imageUrl: Joi.string().uri().allow(null, ""),
+  imagePublicId: Joi.string().allow(null, "")
 })
 .min(1);
 

@@ -21,7 +21,8 @@ const propertySchema = new mongoose.Schema({
         ref: "categorias",
         required: false
     },
-    imageUrl: { type: String, required: false }
+    imageUrl: { type: String, required: false },
+    imagePublicId: { type: String, required: false }
 }, { timestamps: true })
 
 //se agrega el tojson para transformar la salida al hacer res.status.json

@@ -1,6 +1,7 @@
 import { propertyRepository } from "../repositories/property.repository.js";
 import { categoryRepository } from "../repositories/category.repository.js";
 import { PLAN } from "../constants/user.constants.js";
+import { destroyAsset, extractPublicIdFromUrl } from "./cloudinary.services.js";
 
 export const getAllProperties = async (page, limit) => {
 
@@ -53,6 +54,15 @@ export const deleteProperty = async (id,userid) => {
         const error = new Error("No puede borrar esa propiedad");
         error.status = 401;
         throw error;
+    }
+    const publicId = esOwner.imagePublicId?.trim() || extractPublicIdFromUrl(esOwner.imageUrl);
+    if (publicId) {
+        const cloudinaryResult = await destroyAsset(publicId);
+        if (!["ok", "not found"].includes(cloudinaryResult.result)) {
+            const error = new Error("No se pudo eliminar la imagen en Cloudinary");
+            error.status = 502;
+            throw error;
+        }
     }
     const property = await propertyRepository.deleteById(id);
     return property;
